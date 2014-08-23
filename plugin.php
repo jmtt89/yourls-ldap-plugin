@@ -50,7 +50,7 @@ function ldapauth_environment_check() {
 }
 
 
-yourls_add_filter( 'is_valid_user', 'ldapauth_is_valid_user' );
+yourls_add_filter( 'shunt_is_valid_user', 'ldapauth_is_valid_user' );
 
 // returns true/false
 function ldapauth_is_valid_user( $value ) {
