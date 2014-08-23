@@ -16,7 +16,7 @@ if( !defined( 'YOURLS_ABSPATH' ) ) die();
 function ldapauth_environment_check() {
 	$required_params = array(
 		'LDAPAUTH_HOST', // ldap host
-		//'LDAAUTHP_PORT', // ldap port
+		//'LDAPAUTH_PORT', // ldap port
 		'LDAPAUTH_BASE', // base ldap path
 		//'LDAPAUTH_USERNAME_FIELD', // field to check the username against
 	);
@@ -54,13 +54,9 @@ yourls_add_filter( 'shunt_is_valid_user', 'ldapauth_is_valid_user' );
 
 // returns true/false
 function ldapauth_is_valid_user( $value ) {
-	// doesn't work for API...
-	if (yourls_is_API())
-		return $value;
-
 	@session_start();
 
-	if ( isset( $_SESSION['LDAPAUTH_AUTH_USER'] ) ) {
+	if (!yourls_is_API() && isset( $_SESSION['LDAPAUTH_AUTH_USER'] ) ) {
 		// already authenticated...
 		$username = $_SESSION['LDAPAUTH_AUTH_USER'];
 		if ( ldapauth_is_authorized_user( $username ) ) {
